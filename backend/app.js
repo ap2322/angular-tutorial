@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 });
 
 app.post("/api/posts", (req, res, next) => {
-  consts post = req.body;
+  const post = req.body;
   console.log(post)
   res.status(201).json({
     message: 'Post added successfully'
