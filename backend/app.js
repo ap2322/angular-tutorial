@@ -1,9 +1,21 @@
+require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const Post = require('./models/post')
 
 const app = express();
+
+
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PW}@${process.env.MONGO_CLUSTER}.mongodb.net/node-angular?retryWrites=true&w=majority`,
+    { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log("Connected to database!")
+  })
+  .catch(() => {
+    console.log("Connection failed")
+  })
 
 app.use(bodyParser.json());
 
@@ -25,7 +37,7 @@ app.post("/api/posts", (req, res, next) => {
     title: req.body.title,
     content: req.body.content
   });
-  console.log(post)
+  post.save();
   res.status(201).json({
     message: 'Post added successfully'
   })
