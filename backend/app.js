@@ -71,6 +71,16 @@ app.get('/api/posts', (req, res, next) => {
     .catch((error) => console.log(error))
 });
 
+app.get("/api/posts/:id", (req, res, next) => {
+  Post.findById(req.params.id).then(post => {
+    if(post) {
+      res.status(200).json(post)
+    } else {
+      res.status(404).json({message: "Post not found"})
+    }
+  })
+});
+
 app.delete("/api/posts/:id", (req, res, next) => {
   console.log("onDelete", req.params)
   Post.deleteOne({_id: req.params.id})
