@@ -38,10 +38,14 @@ app.post("/api/posts", (req, res, next) => {
     content: req.body.content
   });
   console.log("on create", post)
-  post.save();
-  res.status(201).json({
-    message: 'Post added successfully'
-  })
+  post.save()
+    .then(result => {
+      res.status(201).json({
+        message: 'Post added successfully',
+        postId: result._id
+      })
+    })
+    .catch(result => console.log('Error saving a new post'))
 });
 
 app.get('/api/posts', (req, res, next) => {
