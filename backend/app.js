@@ -20,7 +20,12 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PW
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+  console.log('origin', req.headers.host);
+  if (req.headers.host === 'localhost:3000') {
+    res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000/');
+  } else {
+    res.setHeader("Access-Control-Allow-Origin", process.env.S3_URL);
+  }
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
