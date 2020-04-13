@@ -41,7 +41,7 @@ export class PostsService {
   }
 
   getPost(id: string) {
-    return this.http.get<{_id: string, title: string, content: string}>("http://localhost:3000/api/posts/" + id);
+    return this.http.get<{_id: string, title: string, content: string}>(BACKEND_URL + id);
   }
 
   addPost(title: string, content: string) {
